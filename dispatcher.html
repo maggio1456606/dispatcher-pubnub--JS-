@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Publish Subscribe Tutorial</title>
+</head>
+
+<body>
+    <h1>DISPATCHER</h1>
+    <h5>Rcv from app</h5>
+    <textarea id="rcv" rows="10" cols="70" readonly></textarea>
+    <br/>
+
+    <h5>Send Update to apps</h5>
+    <textarea id="send" rows="10" cols="70" readonly></textarea>
+
+
+</body>
+
+<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.6.min.js"></script>
+<script src="db.js"></script>
+<script>
+const pubnub = new PubNub({
+    publishKey : 'pub-c-c875966e-dfa8-418f-8b75-26d75c09e4eb',
+    subscribeKey : 'sub-c-9d2252f0-974d-11e9-8107-d6b10db480fa'
+});
+
+pubnub.subscribe({
+    channels: ['countify-channel-rooms' ]
+});
+pubnub.addListener({
+    message: function(event) {
+        let pElement = document.getElementById('rcv');
+        pElement.value += "Message from: "+ event.message.user + " for room: " + 
+        event.message.room + " Event Message : "+ event.message.updatenowcapacity + "\n";
+
+        var sendtoroom = event.message.room;
+
+        //select dbs
+
+        if(sendtoroom == 1) {
+            room1[1] +=event.message.updatenowcapacity; //updating
+            pubnub.publish({
+        channel : 'countify-channel-room-'+sendtoroom,
+        message: {
+            respserver: event.message.user + ' update room. ' +'Room :' + event.message.room + ' max=' + room1[0] + ', now=' + room1[1],
+            now: room1[1]
+        }
+    }, function(status, response) {
+       
+    });
+
+    let a = document.getElementById('send');
+       a.value += event.message.user + ' update room. ' + 'Room ' + sendtoroom + ': max=' + room1[0] + ', now=' + room1[1] + "\n";
+    }
+
+        else if ( sendtoroom == 2) {
+                room2[1] +=event.message.updatenowcapacity; //updating
+                pubnub.publish({
+            channel : 'countify-channel-room-'+sendtoroom,
+            message: {
+                respserver: event.message.user + ' update room. ' + 'Room :' + event.message.room + ' max=' + room2[0] + ', now=' +  room2[1],
+                now: room2[1]
+            }
+        }, function(status, response) {
+        
+        });
+
+        let a = document.getElementById('send');
+        a.value += event.message.user + ' update room. ' +'Room ' + sendtoroom + ': max=' + room2[0] + ', now=' + room2[1] + "\n";
+        }
+                
+        }
+});
+
+</script>
+</html>
