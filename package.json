@@ -1,0 +1,18 @@
+{
+  "name": "dispatcher-countify-luca",
+  "version": "1.0.0",
+  "description": "a simple dispatcher to manage concurrency of countify app.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "luca maggio",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "pubnub": "^4.25.0",
+    "pubsub-js": "^1.7.0"
+  }
+}
