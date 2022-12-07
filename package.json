@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^2.6.2",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "pubnub": "^4.25.0",
     "pubsub-js": "^1.7.0"
   }
